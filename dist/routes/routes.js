@@ -1,17 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const userController_1 = require("../controllers/userController");
+const user_controller_1 = require("../controllers/user-controller");
+const check_auth_1 = require("../middleware/check-auth");
+const status_fun_1 = require("../utils/status-fun");
 class Routes {
     constructor(app) {
         this.app = app;
-        this.userControl = new userController_1.UserController();
-        this.routes();
+        this.userController = new user_controller_1.UserController();
+        this.userRoutes();
+        this.authRoutes();
+        this.products();
     }
-    routes() {
-        this.app.route('/')
-            .get((req, res) => {
-            res.status(200).send({
-                message: 'GET Request sucessfull.'
+    userRoutes() {
+        this.app.post('/signup', this.userController.addNewAccount);
+    }
+    authRoutes() {
+        this.app.post('/authorize', this.userController.auth);
+    }
+    products() {
+        this.app.route('/product')
+            .get(check_auth_1.checkAuth, (req, res) => {
+            return status_fun_1.ok(res, {
+                message: 'All Products'
             });
         });
     }

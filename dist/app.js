@@ -4,13 +4,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const routes_1 = require("./routes/routes");
 const mongoose = require("mongoose");
+const role_init_1 = require("./bootstrap/role-init");
 class App {
     constructor() {
-        this.mongoDBUrl = 'mongodb://localhost/CRMdb';
+        this.mongoDBUrl = 'mongodb://localhost/shoplax';
         this.app = express();
         this.config();
-        this.routes = new routes_1.Routes(this.app);
+        new routes_1.Routes(this.app);
         this.mongoSetup();
+        new role_init_1.DataInit(this.app);
     }
     config() {
         // support application/json type post data
@@ -19,8 +21,12 @@ class App {
         this.app.use(bodyParser.urlencoded({ extended: false }));
     }
     mongoSetup() {
-        mongoose.connect(this.mongoDBUrl, { useNewUrlParser: true });
+        mongoose.connect(this.mongoDBUrl, {
+            useNewUrlParser: true,
+            useCreateIndex: true
+        });
     }
 }
 exports.default = new App().app;
+exports.JWT_KEY = 'this-shop-is-impenetrable';
 //# sourceMappingURL=app.js.map

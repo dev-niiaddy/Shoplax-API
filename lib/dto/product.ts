@@ -7,3 +7,10 @@ export interface DProduct extends Document {
     description: String;
     created_at: Date;
 }
+
+export interface IProduct {
+    name: string;
+    price: number;
+    quantity: number;
+    description: string;
+}

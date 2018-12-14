@@ -1,12 +1,12 @@
-import { RegUser } from "../dto/reg-user-dto";
+import { RegUser, DUser } from "../dto/user";
 import { Request, Response } from 'express';
 import { User } from "../models/user";
 import { Role } from "../models/role";
-import { URole } from "../models/role";
 import { badRequest, created, notFound, unAuthorized, ok } from "../utils/status-fun";
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { JWT_KEY } from "../app";
+import { DRole } from "../dto/role";
 
 const salt: number = 10;
 
@@ -24,10 +24,16 @@ export class UserController {
         
         bcrypt.hash(regUser.confirmPas, salt, (err, hash) => {
 
+            if(err) {
+                return badRequest(res, {
+                    message: 'Signup Failed'
+                });
+            }
+            
             regUser.password = hash;
 
             Role.findOne({ role: 'USER' }, (err, role) => {
-                regUser.role = role as unknown as URole;
+                regUser.role = role as DRole;
     
                 let newUser = new User(regUser);
     
@@ -49,7 +55,7 @@ export class UserController {
         .exec()
         .then( user => {
 
-            let currUser = user as any
+            let currUser = user as DUser
 
             if(!currUser) {
                 return unAuthorized(res, {

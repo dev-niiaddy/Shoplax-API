@@ -9,6 +9,4 @@ export const RoleSchema = new Schema({
     }
 });
 
-export const Role = mongoose.model('Role', RoleSchema);export class URole {
-    role: string;
-}
+export const Role = mongoose.model('Role', RoleSchema);

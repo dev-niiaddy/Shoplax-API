@@ -16,6 +16,11 @@ class UserController {
             });
         }
         bcrypt.hash(regUser.confirmPas, salt, (err, hash) => {
+            if (err) {
+                return status_fun_1.badRequest(res, {
+                    message: 'Signup Failed'
+                });
+            }
             regUser.password = hash;
             role_1.Role.findOne({ role: 'USER' }, (err, role) => {
                 regUser.role = role;

@@ -9,7 +9,4 @@ exports.RoleSchema = new Schema({
     }
 });
 exports.Role = mongoose.model('Role', exports.RoleSchema);
-class URole {
-}
-exports.URole = URole;
 //# sourceMappingURL=role.js.map

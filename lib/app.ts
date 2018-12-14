@@ -1,8 +1,8 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import { Routes } from "./routes/routes";
 import * as mongoose from 'mongoose';
 import { DataInit } from "./bootstrap/role-init";
+import { Routes } from "./routes/routes";
 
 class App {
 
@@ -15,7 +15,7 @@ class App {
     constructor() {
         this.app = express();
         this.config();
-        new Routes(this.app);
+        this.routes = new Routes(this.app);
         this.mongoSetup();
         new DataInit(this.app);
     }

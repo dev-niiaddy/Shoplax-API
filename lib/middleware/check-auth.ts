@@ -21,3 +21,10 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
     }
 
 };
+
+export interface UserData {
+    email: string;
+    userId: string;
+    expiresIn: number;
+    ias: number;
+}

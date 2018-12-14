@@ -2,15 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const bodyParser = require("body-parser");
-const routes_1 = require("./routes/routes");
 const mongoose = require("mongoose");
 const role_init_1 = require("./bootstrap/role-init");
+const routes_1 = require("./routes/routes");
 class App {
     constructor() {
         this.mongoDBUrl = 'mongodb://localhost/shoplax';
         this.app = express();
         this.config();
-        new routes_1.Routes(this.app);
+        this.routes = new routes_1.Routes(this.app);
         this.mongoSetup();
         new role_init_1.DataInit(this.app);
     }

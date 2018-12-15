@@ -11,7 +11,7 @@ exports.ProductSchema = new Schema({
         type: Number,
         required: true
     },
-    quantiy: {
+    quantity: {
         type: Number,
         required: true
     },

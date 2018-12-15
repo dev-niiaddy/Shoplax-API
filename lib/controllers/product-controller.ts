@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { UserData } from "../middleware/check-auth";
 import { User } from "../models/user";
-import { badRequest, unAuthorized, created } from "utils/status-fun";
+import { badRequest, unAuthorized, created, ok, notFound } from "../utils/status-fun";
 import { DUser } from "../dto/user";
 import { Product } from "../models/product";
 
@@ -32,9 +32,7 @@ export class ProductController {
                 })
             })
             .catch( err => {
-                return badRequest(res, {
-                    message: 'Product not added'
-                });
+                return badRequest(res, err);
             })
             
         })
@@ -43,5 +41,32 @@ export class ProductController {
                 message: 'Product cannot be added'
             });
         });
+    }
+
+    public allProducts(req: Request, res: Response) {
+        Product.find()
+        .exec()
+        .then(products => {
+            return ok(res, products);
+        })
+        .catch(err => {
+            return badRequest(res, err);
+        })
+    }
+
+    public productWithId(req: Request, res: Response) {
+        
+        Product.findOne({ _id: req.params.productId })
+        .exec()
+        .then( product => {
+            if(!product) {
+                return notFound(res, {
+                    message: 'Product not found'
+                })
+            }
+
+            return ok(res, product);
+        })
+        .catch( err => badRequest(res, 'Error'));
     }
 }

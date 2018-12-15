@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../models/user");
-const status_fun_1 = require("utils/status-fun");
+const status_fun_1 = require("../utils/status-fun");
 const product_1 = require("../models/product");
 class ProductController {
     addProduct(req, res) {
@@ -24,9 +24,7 @@ class ProductController {
                 });
             })
                 .catch(err => {
-                return status_fun_1.badRequest(res, {
-                    message: 'Product not added'
-                });
+                return status_fun_1.badRequest(res, err);
             });
         })
             .catch(err => {
@@ -34,6 +32,29 @@ class ProductController {
                 message: 'Product cannot be added'
             });
         });
+    }
+    allProducts(req, res) {
+        product_1.Product.find()
+            .exec()
+            .then(products => {
+            return status_fun_1.ok(res, products);
+        })
+            .catch(err => {
+            return status_fun_1.badRequest(res, err);
+        });
+    }
+    productWithId(req, res) {
+        product_1.Product.findOne({ _id: req.params.productId })
+            .exec()
+            .then(product => {
+            if (!product) {
+                return status_fun_1.notFound(res, {
+                    message: 'Product not found'
+                });
+            }
+            return status_fun_1.ok(res, product);
+        })
+            .catch(err => status_fun_1.badRequest(res, 'Error'));
     }
 }
 exports.ProductController = ProductController;

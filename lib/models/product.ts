@@ -1,6 +1,5 @@
 import * as mongoose from 'mongoose';
-
-const Schema = mongoose.Schema;
+import { Schema } from '../app';
 
 export const ProductSchema = new Schema({
     name: {
@@ -11,7 +10,7 @@ export const ProductSchema = new Schema({
         type: Number,
         required: true
     },
-    quantiy: {
+    quantity: {
         type: Number,
         required: true
     },

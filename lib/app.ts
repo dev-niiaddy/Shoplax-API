@@ -39,3 +39,5 @@ class App {
 export default new App().app;
 
 export const JWT_KEY = 'this-shop-is-impenetrable';
+
+export const Schema  = mongoose.Schema;

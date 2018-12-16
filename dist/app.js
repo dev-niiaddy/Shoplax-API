@@ -29,4 +29,5 @@ class App {
 }
 exports.default = new App().app;
 exports.JWT_KEY = 'this-shop-is-impenetrable';
+exports.Schema = mongoose.Schema;
 //# sourceMappingURL=app.js.map

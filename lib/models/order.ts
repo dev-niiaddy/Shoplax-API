@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
-import { Schema } from '../app';
+
+const Schema = mongoose.Schema;
 
 const Types = mongoose.Types;
 

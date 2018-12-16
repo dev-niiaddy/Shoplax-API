@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
-import { Schema } from '../app';
+
+const Schema = mongoose.Schema;
 
 export const RoleSchema = new Schema({
     role: {

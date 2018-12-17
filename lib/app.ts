@@ -3,6 +3,7 @@ import * as bodyParser from "body-parser";
 import * as mongoose from 'mongoose';
 import { DataInit } from "./bootstrap/role-init";
 import { Routes } from "./routes/routes";
+import { NextFunction, Response, Request } from "express";
 
 class App {
 
@@ -14,8 +15,8 @@ class App {
 
     constructor() {
         this.app = express();
-        this.config();
         this.routes = new Routes(this.app);
+        this.config();
         this.mongoSetup();
         new DataInit(this.app);
     }
@@ -26,6 +27,12 @@ class App {
 
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
+
+        this.app.use((req: Request, res: Response, next: NextFunction) => {
+            res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        });
     }
 
     private mongoSetup(): void {

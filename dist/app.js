@@ -9,8 +9,8 @@ class App {
     constructor() {
         this.mongoDBUrl = 'mongodb://localhost/shoplax';
         this.app = express();
-        this.config();
         this.routes = new routes_1.Routes(this.app);
+        this.config();
         this.mongoSetup();
         new role_init_1.DataInit(this.app);
     }
@@ -19,6 +19,11 @@ class App {
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use((req, res, next) => {
+            res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        });
     }
     mongoSetup() {
         mongoose.connect(this.mongoDBUrl, {

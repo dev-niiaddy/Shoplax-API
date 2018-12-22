@@ -8,7 +8,7 @@ exports.checkAuth = (req, res, next) => {
         let token = req.headers.authorization.split(" ")[1];
         let decoded = jwt.verify(token, app_1.JWT_KEY);
         req.userData = decoded;
-        console.log(decoded);
+        //  console.log(decoded);
         next();
     }
     catch (err) {

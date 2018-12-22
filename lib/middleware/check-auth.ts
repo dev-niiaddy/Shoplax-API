@@ -11,7 +11,7 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
     
          let decoded = jwt.verify(token, JWT_KEY);
          (req as any).userData = decoded;
-         console.log(decoded);
+        //  console.log(decoded);
          next();
 
     }catch(err) {
@@ -21,7 +21,7 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
     }
 
 };
-
+//interface to define data recieved from decoding the auth token
 export interface UserData {
     email: string;
     userId: string;

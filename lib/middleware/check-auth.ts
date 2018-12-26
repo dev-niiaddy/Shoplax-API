@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { JWT_KEY } from '../app';
 import { unAuthorized } from '../utils/status-fun';
 
 export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
@@ -9,7 +8,7 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
         
         let token = req.headers.authorization.split(" ")[1];
     
-         let decoded = jwt.verify(token, JWT_KEY);
+         let decoded = jwt.verify(token, process.env.JWT_KEY);
          (req as any).userData = decoded;
         //  console.log(decoded);
          next();

@@ -5,7 +5,6 @@ import { Role } from "../models/role";
 import { badRequest, created, notFound, unAuthorized, ok } from "../utils/status-fun";
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { JWT_KEY } from "../app";
 import { DRole } from "../dto/role";
 
 const salt: number = 10;
@@ -51,6 +50,9 @@ export class UserController {
     }
 
     public auth(req: Request, res: Response) {
+
+        console.log(process.env.JWT_KEY);
+        
         User.findOne( { email: req.body.email })
         .exec()
         .then( user => {
@@ -77,7 +79,7 @@ export class UserController {
                         email: currUser.email,
                         userId: currUser.id 
                     }, 
-                        JWT_KEY,
+                        process.env.JWT_KEY,
                     {
                         expiresIn: '1h' 
                     });

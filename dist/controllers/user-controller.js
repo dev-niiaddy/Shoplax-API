@@ -5,7 +5,6 @@ const role_1 = require("../models/role");
 const status_fun_1 = require("../utils/status-fun");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const app_1 = require("../app");
 const salt = 10;
 class UserController {
     addNewAccount(req, res) {
@@ -38,6 +37,7 @@ class UserController {
         });
     }
     auth(req, res) {
+        console.log(process.env.JWT_KEY);
         user_1.User.findOne({ email: req.body.email })
             .exec()
             .then(user => {
@@ -57,7 +57,7 @@ class UserController {
                     let token = jwt.sign({
                         email: currUser.email,
                         userId: currUser.id
-                    }, app_1.JWT_KEY, {
+                    }, process.env.JWT_KEY, {
                         expiresIn: '1h'
                     });
                     return status_fun_1.ok(res, {

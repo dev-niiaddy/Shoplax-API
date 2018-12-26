@@ -8,7 +8,8 @@ const role_init_1 = require("./bootstrap/role-init");
 const routes_1 = require("./routes/routes");
 class App {
     constructor() {
-        this.mongoDBUrl = "mongodb://localhost/shoplax";
+        // private mongoDBUrl: string = `mongodb://tonystark:${process.env.MONGO_ATLAS_PW}@shoplaxcluster-shard-00-00-lumdn.mongodb.net:27017,shoplaxcluster-shard-00-01-lumdn.mongodb.net:27017,shoplaxcluster-shard-00-02-lumdn.mongodb.net:27017/test?ssl=true&replicaSet=ShoplaxCluster-shard-0&authSource=admin&retryWrites=true`;
+        this.mongoDBUrl = "mongodb://localhost:27017/shoplax";
         this.app = express();
         this.config();
         this.mongoSetup();
@@ -56,6 +57,5 @@ class App {
     }
 }
 exports.default = new App().app;
-exports.JWT_KEY = "this-shop-is-impenetrable";
 exports.Schema = mongoose.Schema;
 //# sourceMappingURL=app.js.map

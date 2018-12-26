@@ -11,7 +11,9 @@ class App {
 
   private routes: Routes;
 
-  private mongoDBUrl: string = "mongodb://localhost/shoplax";
+  // private mongoDBUrl: string = `mongodb://tonystark:${process.env.MONGO_ATLAS_PW}@shoplaxcluster-shard-00-00-lumdn.mongodb.net:27017,shoplaxcluster-shard-00-01-lumdn.mongodb.net:27017,shoplaxcluster-shard-00-02-lumdn.mongodb.net:27017/test?ssl=true&replicaSet=ShoplaxCluster-shard-0&authSource=admin&retryWrites=true`;
+
+  private mongoDBUrl: string = "mongodb://localhost:27017/shoplax";
 
   constructor() {
     this.app = express();
@@ -58,7 +60,7 @@ class App {
   }
 
   private errorHandlers(): void {
-    this.app.use((req: Request, res: Response, next: NextFunction) => {
+    this.app.use((req , res , next) => {
       let error = new Error("Not found");
       (error as any).status = 404;
       next(error);
@@ -78,7 +80,5 @@ class App {
 }
 
 export default new App().app;
-
-export const JWT_KEY = "this-shop-is-impenetrable";
 
 export const Schema = mongoose.Schema;
